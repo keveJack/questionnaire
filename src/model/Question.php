@@ -7,7 +7,7 @@ class Question
     private string $_text;
     private ReponseCollection $_responses;
 
-    public function __construct(string $_text)
+    public function __construct(string $_text, int $id = 0)
     {
         $this->_text = $_text;
         $this->_responses = new ReponseCollection();
@@ -22,5 +22,5 @@ class Question
     {
         $this->_responses[] = $_response;
     }
-}
 
+}

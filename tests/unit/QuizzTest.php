@@ -23,6 +23,8 @@ class QuizzTest extends TestCase
         $this->assertSame('Quizz about PHP', $quizz->getTitle());
         $this->assertSame(2, $quizz->getQuestions()->count());
     }
+   
 }
+
 
 

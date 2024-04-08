@@ -6,4 +6,15 @@ services:
    volumes:
      - .:/var/www/html
    ports:
-     - 80:80 
+    - 83:80 
+   depends_on:
+      - mysql-srv
+  mysql-srv:
+    image: mysql:8.3
+    environment:
+      MYSQL_ROOT_PASSWORD: password 
+      MYSQL_DATABASE: quizz
+      MYSQL_USER: de_user
+      MYSQL_PASSWORD: password
+    ports:
+     - "3306:3306"

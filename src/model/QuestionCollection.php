@@ -3,6 +3,7 @@
 namespace app\quizz\model;
 
 class QuestionCollection implements \ArrayAccess, \Countable, \Iterator
+
 {
     private $_values = [];
     private int $_position = 0;
@@ -43,33 +44,42 @@ class QuestionCollection implements \ArrayAccess, \Countable, \Iterator
     {
         return count($this->_values);
     }
-    
-    public function rewind():void
+
+    public function rewind(): void
     {
         reset($this->_values);
         $this->_position = 0;
     }
 
-    public function current():Question
+    public function current(): Question
     {
         return current($this->_values);
     }
 
-    public function key():Mixed
+    public function key(): Mixed
     {
         return key($this->_values);
     }
 
-    public function next():void
+    public function next(): void
     {
         next($this->_values);
         $this->_position++;
     }
 
-    public function valid():bool
+    public function valid(): bool
     {
         return key($this->_values) !== null;
     }
+    public static function listById(int $id): ?QuestionCollection
+    {
+        $statement = Database::getInstance()->getConnexion()->prepare('select * from question where numquizz = :id;');
+        $statement->execute(['id' => $id]);
+        $liste = new QuestionCollection();
+        while ($row = $statement->fetch()) {
+            $question = new Question($row['texte'], $row['id']);
+            $liste[] = $question;
+        }
+        return $liste;
+    }
 }
-
-
